@@ -1,0 +1,110 @@
+ext {
+    //Packages
+    oldSupportPackage = 'com.android.support'
+    googlePackage = 'com.google'
+    androidxPackage = 'androidx'
+
+    squareupPackage = 'com.squareup'
+    reactivePackage = 'io.reactivex.rxjava2'
+
+    jakeWhartonPackage = 'com.jakewharton'
+    bumptechPackage = 'com.github.bumptech'
+
+    junitPackage = 'junit'
+    mockitoPackage = 'org.mockito'
+
+    zeteticPackage = 'net.zetetic'
+
+    //Version
+    supportVersion = '1.1.0'
+    appCompatVersion = '1.1.0'
+    coreKtxVersion = '1.1.0'
+    annotationVersion = '1.1.0'
+    legacySupportv4Version = '1.0.0'
+    recycleviewVersion = '1.1.0'
+    cardviewVersion = '1.0.0'
+    constraintLayoutVersion = '1.1.3'
+    preferenceVersion = '1.1.0'
+    lifecycleVersion = '2.1.0'
+    materialVersion = '1.2.0-alpha02'
+
+    roomVersion = '2.2.2'
+
+    retrofitVersion = '2.6.1'
+    gsonVersion = '2.8.5'
+    okhttpVersion = '4.2.0'
+
+    junitVersion = '4.12'
+    mockitoVersion = '2.28.0'
+    testRunnerVersion = '1.0.2'
+    junitExtVersion = '1.1.1'
+    espressoVersion = '3.2.0'
+
+    rxjavaVersion = '2.2.9'
+    rxandroidVersion = '2.1.0'
+
+    picassoVersion = '2.71828'
+    glideVersion = '4.9.0'
+
+    timberVersion = '4.7.1'
+    butterknifeVersion = '10.2.0'
+
+    sqlCipherVersion = '4.2.0@aar'
+
+    androidxDependencies = [
+            appCompat       : "${androidxPackage}.appcompat:appcompat:${appCompatVersion}",
+            coreKtx         : "${androidxPackage}.core:core-ktx:${coreKtxVersion}",
+            annotation      : "${androidxPackage}.annotation:annotation:${annotationVersion}",
+            legacySupportv4 : "${androidxPackage}.legacy:legacy-support-v4:${legacySupportv4Version}",
+            recyclerview    : "${androidxPackage}.recyclerview:recyclerview:${recycleviewVersion}",
+            cardview        : "${androidxPackage}.cardview:cardview:${cardviewVersion}",
+            constraintlayout: "${androidxPackage}.constraintlayout:constraintlayout:${constraintLayoutVersion}",
+            preference      : "${androidxPackage}.preference:preference:${preferenceVersion}",
+            lifecycle       : "${androidxPackage}.lifecycle:lifecycle-extensions:${lifecycleVersion}"
+    ]
+
+    googleDependencies = [
+            material: "${googlePackage}.android.material:material:${materialVersion}",
+            gson    : "${googlePackage}.code.gson:gson:${gsonVersion}",
+    ]
+
+    roomDependencies = [
+            runtime : "${androidxPackage}.room:room-runtime:${roomVersion}",
+            compiler: "${androidxPackage}.room:room-compiler:${roomVersion}",
+            rxjava  : "${androidxPackage}.room:room-rxjava2:${roomVersion}",
+            testing : "${androidxPackage}.room:room-testing:${roomVersion}",
+    ]
+
+    retrofitDependencies = [
+            retrofit          : "${squareupPackage}.retrofit2:retrofit:${retrofitVersion}",
+            gson              : "${squareupPackage}.retrofit2:converter-gson:${retrofitVersion}",
+            rxjava            : "${squareupPackage}.retrofit2:adapter-rxjava2:${retrofitVersion}",
+            loggingInterceptor: "${squareupPackage}.okhttp3:logging-interceptor:${okhttpVersion}",
+    ]
+
+    rxDependencies = [
+            rxJava   : "${reactivePackage}:rxjava:${rxjavaVersion}",
+            rxAndroid: "${reactivePackage}:rxandroid:${rxandroidVersion}",
+    ]
+
+    testingDependencies = [
+            junit   : "${junitPackage}:junit:${junitVersion}",
+            mockito : "${mockitoPackage}:mockito-core:${mockitoVersion}",
+            runner  : "${oldSupportPackage}.test:runner:${testRunnerVersion}",
+            junitExt: "${androidxPackage}.test.ext:junit:${junitExtVersion}",
+            espresso: "${androidxPackage}.test.espresso:espresso-core:${espressoVersion}",
+    ]
+
+    jakeWhartonDependencies = [
+            timber     : "${jakeWhartonPackage}.timber:timber:${timberVersion}",
+            butterknife: "${jakeWhartonPackage}:butterknife:${butterknifeVersion}",
+            butterknifeCompiler:"${jakeWhartonPackage}:butterknife-compiler:${butterknifeVersion}"
+    ]
+
+    glide = "${bumptechPackage}.glide:glide:${glideVersion}"
+    picasso = "${squareupPackage}.picasso:picasso:${picassoVersion}"
+
+    okhttp = "${squareupPackage}.okhttp3:okhttp:${okhttpVersion}"
+
+    sqlCipher = "${zeteticPackage}:android-database-sqlcipher:${sqlCipherVersion}"
+}
