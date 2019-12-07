@@ -7,10 +7,16 @@
 /**
  * Resourceful controller for interacting with historials
  */
-
- const Historial = use('App/Models/Historial')
+  const Database = use('Database')
+  const Historial = use('App/Models/Historial')
 
 class HistorialController {
+
+  async getByUser({params, request, response}){
+    let { id } = params
+    let Historial = Database.select('*').where('user_id',id)
+  }
+
   /**
    * Show a list of all historials.
    * GET historials
