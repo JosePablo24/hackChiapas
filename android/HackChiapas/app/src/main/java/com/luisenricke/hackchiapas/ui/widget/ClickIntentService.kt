@@ -1,17 +1,23 @@
 package com.luisenricke.hackchiapas.ui.widget
 
 import android.app.IntentService
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.CountDownTimer
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.telephony.SmsManager
 import android.widget.Toast
 import com.luisenricke.hackchiapas.Constants.CLICK_ACTIVE_WIDGET
 import com.luisenricke.hackchiapas.Constants.CLICK_DOBLE_VALIDATION
+import com.luisenricke.hackchiapas.common.extension.format
+import com.luisenricke.hackchiapas.ui.main.MainActivity
+import com.luisenricke.hackchiapas.utils.LocationTrack
 import com.luisenricke.hackchiapas.utils.PreferenceHelper
 import timber.log.Timber
 
@@ -27,17 +33,53 @@ class ClickIntentService : IntentService("ClickIntentService") {
                     Boolean::class
                 ) == true
             ) {
-                val v =
-                    getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-// Vibrate for 500 milliseconds
-                // Vibrate for 500 milliseconds
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
-                } else { //deprecated in API 26
-                    v.vibrate(5000)
+                var longitude: Double = 0.0
+                var latitude: Double = 0.0
+                // Latitud - Longitud
+                val locationTrack: LocationTrack = LocationTrack(applicationContext)
+                if (locationTrack.canGetLocation()) {
+                    longitude = locationTrack.getLongitude()
+                    latitude = locationTrack.getLatitude()
+                    Timber.i("$latitude,$longitude")
+
+                    // SMS
+                    val intent = Intent()
+                    val pi = PendingIntent.getActivity(applicationContext, 0, intent, 0)
+                    val sms: SmsManager = SmsManager.getDefault()
+                    sms.sendTextMessage(
+                        "9612594528",
+                        null,
+                        "Marcame, estoy en posible peligro.",
+                        pi,
+                        null
+                    )
+                    sms.sendTextMessage(
+                        "9612594528",
+                        null,
+                        "Ubicación: http://maps.google.com/?q=${latitude.format(6)},${longitude.format(
+                            6
+                        )}",
+                        pi,
+                        null
+                    )
+                    // Vibrador
+                    val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        v.vibrate(
+                            VibrationEffect.createOneShot(
+                                500,
+                                VibrationEffect.DEFAULT_AMPLITUDE
+                            )
+                        )
+                    } else { //deprecated in API 26
+                        v.vibrate(5000)
+                    }
+                    Toast.makeText(applicationContext, "Se termino el tiempo", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    locationTrack.showSettingsAlert()
                 }
-                Toast.makeText(applicationContext, "Se termino el tiempo", Toast.LENGTH_SHORT)
-                    .show()
+
             } else {
                 Toast.makeText(applicationContext, "Se paro el tiempo", Toast.LENGTH_SHORT).show()
             }

@@ -35,6 +35,7 @@ object UsuarioImp : BaseWebService<UsuarioAPI>() {
                     response: Response<UsuarioAPI.UsuarioResponse>
                 ) {
                     usuario = response.body()?.usuario!!
+                    Timber.i("${usuario.nombre} ${usuario.apellido}")
                 }
             })
         return usuario
