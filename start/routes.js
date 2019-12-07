@@ -26,4 +26,6 @@ Route.post('/auth/login', 'AuthController.login')
 Route.group(()=> {
   Route.resource('contacto','ContactoController').apiOnly();
   Route.get('contactos/:id', 'ContactoController.getByUser')
+  Route.resource('historial','HistorialController').apiOnly()
+  Route.get('historial/user/:id', 'HistorialController.getByUser')
 }).prefix('api/v1')
