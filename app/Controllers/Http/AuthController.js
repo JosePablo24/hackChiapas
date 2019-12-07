@@ -6,7 +6,7 @@ class AuthController {
     async register({request, auth, response}) {
         
         const username = request.input("username")
-        const email = request.input("email")
+        //const email = request.input("email")
         const password = request.input("password")
         const name = request.input("name")
         const lastname = request.input("lastname")
@@ -16,7 +16,7 @@ class AuthController {
 
         let user = new User()
         user.username = username
-        user.email = email
+        //user.email = email
         user.password = password
         user.name = name
         user.lastname = lastname
