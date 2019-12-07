@@ -7,6 +7,9 @@
 /**
  * Resourceful controller for interacting with contactos
  */
+  const Database = use('Database')
+  const Contacto = use('App/Models/Contacto')
+
 class ContactoController {
   /**
    * Show a list of all contactos.
@@ -18,6 +21,14 @@ class ContactoController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    let contactos = await Contacto.all()
+    return response.status(201).json(contactos)
+  }
+
+  async getByUser({params, request, response, view}) {
+    let { id } = params
+    let contactos = Database.table('contactos').select('*').where('user_id',id)
+    return contactos
   }
 
   /**
@@ -41,6 +52,11 @@ class ContactoController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    let contacto_data = request.all()
+    let contacto = await Contacto.create(contacto_data)
+    return response.status(201).json({
+      message : 'Contacto saved'
+    })
   }
 
   /**
@@ -53,6 +69,9 @@ class ContactoController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    let { id } = params
+    let contacto = await Contacto.find(id)
+    return response.status(201).json(contacto)
   }
 
   /**
@@ -76,6 +95,15 @@ class ContactoController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+    let {id } = params
+    let contacto_data = request.all()
+
+    let contacto = await Contacto.findOrFail(id)
+
+    contacto.merge(contacto_data)
+    await contacto.save()
+
+    return response.status(201).json({message: 'Contacto Updated'})
   }
 
   /**
@@ -87,6 +115,14 @@ class ContactoController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    let { id } = params
+
+    let contacto = await Contacto.findOrFail(id)
+    await contacto.delete()
+
+    return response.status(201).json({
+      message : 'contacto deleted'
+    })
   }
 }
 

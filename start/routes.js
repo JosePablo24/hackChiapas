@@ -22,3 +22,8 @@ Route.get('/', () => {
 
 Route.post('/auth/register', 'AuthController.register')
 Route.post('/auth/login', 'AuthController.login')
+
+Route.group(()=> {
+  Route.resource('contacto','ContactoController').apiOnly();
+  Route.get('contactos/:id', 'ContactoController.getByUser')
+}).prefix('api/v1')

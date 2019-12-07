@@ -7,6 +7,9 @@
 /**
  * Resourceful controller for interacting with historials
  */
+
+ const Historial = use('App/Models/Historial')
+
 class HistorialController {
   /**
    * Show a list of all historials.
@@ -18,6 +21,8 @@ class HistorialController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    let historial = Historial.all()
+    return response.status(200).json(historial)
   }
 
   /**
@@ -41,6 +46,11 @@ class HistorialController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    let historia_data = request.all()
+    let historial = await Historial.create(historia_data)
+    return response.status(201).json({
+      message : 'Saved in Historial'
+    })
   }
 
   /**
@@ -53,6 +63,9 @@ class HistorialController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    let { id } = params
+    let historial = await Historial.findOrFail(id)
+    return response.status(200).json(historial)
   }
 
   /**
@@ -76,6 +89,14 @@ class HistorialController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+    let { id } = params
+    let data_historial  = request.all()
+    let historial = await Historial.findOrFail(id)
+
+    historial.merge()
+    await historial.save()
+
+    return response.status(201).json({message : 'Historial updated'})
   }
 
   /**
@@ -87,6 +108,11 @@ class HistorialController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    let { id } = params
+    let historia = Historial.findOrFail(id)
+    historia.delete()
+    
+    return response.status(201).json({message: 'Historia deleted'})
   }
 }
 
