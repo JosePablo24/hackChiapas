@@ -49,5 +49,12 @@ dependencies {
     testImplementation roomDependencies.testing
     implementation roomDependencies.rxjava
 
+    implementation retrofitDependencies.retrofit
+    implementation retrofitDependencies.gson
+    implementation googleDependencies.gson
+    implementation retrofitDependencies.loggingInterceptor
+    implementation retrofitDependencies.rxjava
+
+
     implementation jakeWhartonDependencies.timber
 }

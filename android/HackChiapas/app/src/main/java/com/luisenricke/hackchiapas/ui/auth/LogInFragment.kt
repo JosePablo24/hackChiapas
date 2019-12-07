@@ -7,26 +7,24 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textview.MaterialTextView
-import com.luisenricke.hackchiapas.Constants
-import com.luisenricke.hackchiapas.Constants.IS_LOGGED
+import com.luisenricke.hackchiapas.Constants.USER_ID
 import com.luisenricke.hackchiapas.Constants.MAIN_ACTIVITY
 import com.luisenricke.hackchiapas.Constants.SIGNUP_FRAGMENT
 import com.luisenricke.hackchiapas.R
 import com.luisenricke.hackchiapas.common.BaseFragment
 import com.luisenricke.hackchiapas.data.dao.UsuarioDAO
 import com.luisenricke.hackchiapas.data.entity.Usuario
+import com.luisenricke.hackchiapas.network.usuario.UsuarioImp
 import com.luisenricke.hackchiapas.ui.view.FormView
-import com.luisenricke.hackchiapas.ui.view.Toolbar
 import com.luisenricke.hackchiapas.utils.PreferenceHelper
+import timber.log.Timber
 
 @SuppressLint("ClickableViewAccessibility")
-class LogInFragment : BaseFragment(), View.OnFocusChangeListener {
+class LogInFragment : BaseFragment() {
 
     //Views in fragment
     private lateinit var btnDisparador: MaterialButton
@@ -68,9 +66,11 @@ class LogInFragment : BaseFragment(), View.OnFocusChangeListener {
             if (!txtCorreo.text.isNullOrEmpty() && !txtContrasenia.text.isNullOrEmpty()) {
                 //callEndPointUserLogin(txtCorreo.text.toString(), txtContrasenia.text.toString())
                 //FIXME: Call ENDPOINT
-                // val checkUser = usuarioDAO.get(txtCorreo.text.toString())
-                val usuario: Usuario? = null
-                if (usuario == null) {
+                val respuesta = UsuarioImp.login(txtCorreo.text.toString(), txtContrasenia.text.toString())
+                Timber.i("usuario: ${respuesta.id} :: ${respuesta.correo}")
+                //val checkUser = usuarioDAO.get(txtCorreo.text.toString())
+                //val usuario: Usuario? = null
+                if (respuesta.id == -1) {
                     Toast.makeText(
                         activity.baseContext,
                         "No encuentra logeado",
@@ -81,31 +81,18 @@ class LogInFragment : BaseFragment(), View.OnFocusChangeListener {
 
                 Toast.makeText(activity.baseContext, "Ha iniciado sesión", Toast.LENGTH_SHORT)
                     .show()
-                PreferenceHelper.set(activity.baseContext, IS_LOGGED, true)
-                // FIXME: Change to Menu
-                listener?.changeActivity(MAIN_ACTIVITY)
+                //PreferenceHelper.set(activity.baseContext, USER_ID, true)
+                //listener?.changeActivity(MAIN_ACTIVITY)
                 return@setOnClickListener
-            }
-
-            if (txtCorreo.text.isNullOrEmpty() && !txtContrasenia.text.isNullOrEmpty()) {
-                txtCorreo.requestFocus()
-                Toast.makeText(activity.baseContext, "Es necesario el correo", Toast.LENGTH_SHORT)
-                    .show()
-                return@setOnClickListener
-            }
-
-            if (!txtCorreo.text.isNullOrEmpty() && txtContrasenia.text.isNullOrEmpty()) {
-                txtContrasenia.requestFocus()
+            } else {
                 Toast.makeText(
                     activity.baseContext,
-                    "Es necesario la contraseña",
+                    "Es necesario rellenar el formulario",
                     Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
+                )
+                    .show()
             }
         }
-
-        txtCorreo.onFocusChangeListener = this
 
         return view
     }
@@ -113,18 +100,6 @@ class LogInFragment : BaseFragment(), View.OnFocusChangeListener {
     companion object {
         @JvmStatic
         fun newInstance() = LogInFragment()
-    }
-
-    override fun onFocusChange(v: View?, hasFocus: Boolean) {
-        if (!hasFocus && v != null)
-            when (v.id) {
-                R.id.txt_correo ->
-                    FormView.setError(
-                        inputCorreo,
-                        FormView.isEmail(txtCorreo.text.toString()),
-                        "No es valido el correo"
-                    )
-            }
     }
 
 }

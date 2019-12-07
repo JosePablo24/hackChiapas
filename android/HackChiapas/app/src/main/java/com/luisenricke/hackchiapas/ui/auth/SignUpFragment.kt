@@ -6,17 +6,18 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textview.MaterialTextView
-import com.luisenricke.hackchiapas.Constants.IS_LOGGED
+import com.luisenricke.hackchiapas.Constants.GENRE_LIST
 import com.luisenricke.hackchiapas.Constants.LOGIN_FRAGMENT
 import com.luisenricke.hackchiapas.Constants.MAIN_ACTIVITY
+import com.luisenricke.hackchiapas.Constants.USER_ID
 import com.luisenricke.hackchiapas.R
 import com.luisenricke.hackchiapas.common.BaseFragment
 import com.luisenricke.hackchiapas.data.dao.UsuarioDAO
@@ -24,6 +25,7 @@ import com.luisenricke.hackchiapas.data.entity.Usuario
 import com.luisenricke.hackchiapas.ui.view.FormView
 import com.luisenricke.hackchiapas.ui.view.Toolbar
 import com.luisenricke.hackchiapas.utils.PreferenceHelper
+
 
 @SuppressLint("ClickableViewAccessibility", "ShowToast")
 class SignUpFragment : BaseFragment(), View.OnFocusChangeListener {
@@ -47,6 +49,8 @@ class SignUpFragment : BaseFragment(), View.OnFocusChangeListener {
 
     private lateinit var usuarioDAO: UsuarioDAO
 
+    private var arrayAdapter: ArrayAdapter<String>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         layout = R.layout.fragment_sign_up
@@ -68,6 +72,14 @@ class SignUpFragment : BaseFragment(), View.OnFocusChangeListener {
         inputContrasenia = view.findViewById(R.id.input_contrasenia)
         txtContrasenia = view.findViewById(R.id.txt_contrasenia)
         lblLogin = view.findViewById(R.id.lbl_login)
+
+        arrayAdapter = ArrayAdapter<String>(
+            activity.baseContext,
+            R.layout.support_simple_spinner_dropdown_item,
+            GENRE_LIST
+        )
+        arrayAdapter!!.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+        spinnerGenero.adapter = arrayAdapter
 
         lblLogin.setOnTouchListener { _, event ->
             when (event.action) {
@@ -96,11 +108,10 @@ class SignUpFragment : BaseFragment(), View.OnFocusChangeListener {
 
                 val usuario = Usuario(
                     txtCorreo.text.toString(),
-                    txtContrasenia.text.toString(),
                     txtTelefono.text.toString(),
                     txtNombre.text.toString(),
                     txtApellido.text.toString(),
-                    spinnerGenero.selectedItem.toString()
+                    spinnerGenero.selectedItem as String
                 )
                 val usuario_id = usuarioDAO.insert(usuario)
 
@@ -109,8 +120,7 @@ class SignUpFragment : BaseFragment(), View.OnFocusChangeListener {
                     "Se ha registrado con exito",
                     Toast.LENGTH_SHORT
                 ).show()
-                PreferenceHelper.set(activity.baseContext, IS_LOGGED, true)
-                // FIXME: Change to Menu
+                PreferenceHelper.set(activity.baseContext, USER_ID, true)
                 listener?.changeActivity(MAIN_ACTIVITY)
                 return@setOnClickListener
             } else {
@@ -139,8 +149,8 @@ class SignUpFragment : BaseFragment(), View.OnFocusChangeListener {
                 R.id.txt_correo ->
                     FormView.setError(
                         inputCorreo,
-                        FormView.isEmail(txtCorreo.text.toString()),
-                        "No es valido el correo"
+                        txtCorreo.text.toString().length > 2,
+                        "No es valido el usuario"
                     )
                 R.id.txt_contrasenia ->
                     FormView.setError(

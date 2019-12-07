@@ -13,20 +13,20 @@
         android:layout_marginStart="@dimen/form_margin_user"
         android:layout_marginEnd="@dimen/form_margin_user"
         android:orientation="vertical">
-
-        <androidx.appcompat.widget.AppCompatImageView
+<!--
+        <ImageView
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/form_margin_user"
             android:src="@drawable/ic_person_black_24dp" />
-
+-->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_correo"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Correo"
+            android:hint="Usuario"
             app:boxBackgroundColor="@color/white"
             app:errorEnabled="true">
 

@@ -23,7 +23,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Correo"
+            android:hint="Usuario"
             app:boxBackgroundColor="@color/white"
             app:errorEnabled="true">
 
