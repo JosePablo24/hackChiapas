@@ -1,10 +1,10 @@
-package com.luisenricke.hackchiapas.data.entity
+package com.luisenricke.hackchiapas.data.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 import com.luisenricke.hackchiapas.data.BaseDAO
-import com.luisenricke.hackchiapas.data.dao.Usuario
-import com.luisenricke.hackchiapas.data.dao.Usuario.SCHEMA
+import com.luisenricke.hackchiapas.data.entity.Usuario
+import com.luisenricke.hackchiapas.data.entity.Usuario.SCHEMA
 
 @Suppress("SpellCheckingInspection")
 @Dao

@@ -6,6 +6,10 @@ import com.luisenricke.hackchiapas.common.BaseActivity
 
 class MainActivity : BaseActivity() {
 
+    companion object {
+        val TAG: String = MainActivity::class.java.name
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.luisenricke.hackchiapas.data.dao.Usuario
-import com.luisenricke.hackchiapas.data.entity.UsuarioDAO
+import com.luisenricke.hackchiapas.data.entity.Usuario
+import com.luisenricke.hackchiapas.data.dao.UsuarioDAO
 import timber.log.Timber
 
 @Database(

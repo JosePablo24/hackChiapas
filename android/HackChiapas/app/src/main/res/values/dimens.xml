@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="form_margin_user">16dp</dimen>
+
+    <dimen name="form_divider_marginTop">16dp</dimen>
+    <dimen name="form_divider_marginTop_small">4dp</dimen>
+</resources>

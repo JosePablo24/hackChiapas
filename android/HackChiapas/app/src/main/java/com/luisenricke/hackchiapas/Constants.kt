@@ -1,13 +1,17 @@
 package com.luisenricke.hackchiapas
 
 object Constants {
-    const val FIRST_LAUNCH: String = "First Launch"
-
-    const val LONG_WAIT_SPLASH: Long = 5000L
-    const val SHORT_WAIT_SPLASH: Long = 2000L
+    const val IS_LOGGED = "Logged"
 
     const val IMAGE_URL_EVANGELION =
         "https://i.imgur.com/md19olb.jpg"
     const val IMAGE_URL_SAMURAI_CHAMPLOO =
         "https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fwallup.net%2Fwp-content%2Fuploads%2F2016%2F05%2F14%2F45171-Samurai_Champloo-Mugen.jpg"
+
+    // Modules
+    const val AUTH_ACTIVITY = "Activity: Auth"
+    const val LOGIN_FRAGMENT = "Fragment: Login"
+    const val SIGNUP_FRAGMENT = "Fragment: SignUp"
+
+    const val MAIN_ACTIVITY = "Activity: Main"
 }

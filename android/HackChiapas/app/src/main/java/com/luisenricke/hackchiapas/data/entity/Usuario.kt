@@ -1,4 +1,4 @@
-package com.luisenricke.hackchiapas.data.dao
+package com.luisenricke.hackchiapas.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

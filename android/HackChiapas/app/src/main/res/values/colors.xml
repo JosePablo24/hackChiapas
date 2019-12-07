@@ -3,4 +3,23 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="white">#EEEEEE</color>
+    <color name="purple_gradient">#C2C6EB</color>
+    <color name="black">#343a40</color>
+    <color name="gray">#D56C757D</color>
+
+    <color name="primary">#007bff</color>
+    <color name="primary_dark">#0C3CE8</color>
+    <color name="success">#28a745</color>
+    <color name="info">#17a2b8</color>
+    <color name="light">#f8f9fa</color>
+    <color name="accent">#FFA650</color>
+    <color name="error">#dc3545</color>
+    <color name="warning">#ffc107</color>
+
+    <!-- Bottom Navigation -->
+    <color name="backgroundActivity">#F7F5F5</color>
+    <color name="colorBarNav">#E57373</color>
+    <color name="colorBarNavSecondary">#F19595</color>
 </resources>
