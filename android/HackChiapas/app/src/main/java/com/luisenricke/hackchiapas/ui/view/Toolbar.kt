@@ -2,6 +2,7 @@ package com.luisenricke.hackchiapas.ui.view
 
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.luisenricke.hackchiapas.R
 
@@ -11,8 +12,8 @@ object Toolbar {
         activity: AppCompatActivity,
         inflater: View
     ): MaterialToolbar? {
-        //val appBarLayout: AppBarLayout = inflater.findViewById(R.id.appBar)
-        //appBarLayout.outlineProvider = null // Disable shadows
+        val appBarLayout: AppBarLayout = inflater.findViewById(R.id.appBar)
+        appBarLayout.outlineProvider = null // Disable shadows
         val toolbar: MaterialToolbar = inflater.findViewById(R.id.toolbar)
         activity.setSupportActionBar(toolbar)
         activity.supportActionBar!!.setDisplayShowTitleEnabled(false)

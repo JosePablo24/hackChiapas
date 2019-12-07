@@ -52,7 +52,6 @@ class SignUpFragment : BaseFragment(), View.OnFocusChangeListener {
         layout = R.layout.fragment_sign_up
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -119,7 +118,7 @@ class SignUpFragment : BaseFragment(), View.OnFocusChangeListener {
                     activity.baseContext,
                     "Es necesario rellenar los campos faltantes",
                     Toast.LENGTH_SHORT
-                )
+                ).show()
             }
         }
 

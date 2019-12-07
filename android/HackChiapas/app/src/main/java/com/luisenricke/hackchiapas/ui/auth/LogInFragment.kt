@@ -36,8 +36,6 @@ class LogInFragment : BaseFragment(), View.OnFocusChangeListener {
     private lateinit var txtContrasenia: TextInputEditText
     private lateinit var lblSingUp: MaterialTextView
 
-    private lateinit var toolbar: MaterialToolbar
-
     private lateinit var usuarioDAO: UsuarioDAO
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,8 +49,6 @@ class LogInFragment : BaseFragment(), View.OnFocusChangeListener {
     ): View? {
         val view = inflater.inflate(layout!!, container, false)
         usuarioDAO = database.usuario()
-
-        toolbar = Toolbar.configBack(activity, view)!!
 
         btnDisparador = view.findViewById(R.id.btn_disparador)
         inputCorreo = view.findViewById(R.id.input_correo)

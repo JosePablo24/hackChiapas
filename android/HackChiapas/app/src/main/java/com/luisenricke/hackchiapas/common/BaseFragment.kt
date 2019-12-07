@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.luisenricke.hackchiapas.R
 import com.luisenricke.hackchiapas.data.AppDatabase
+import kotlinx.android.synthetic.main.activity_auth.*
 import timber.log.Timber
 
 @Suppress("unused")
@@ -36,35 +38,37 @@ abstract class BaseFragment : Fragment() {
         return true
     }
 
-    fun load(fragment: Fragment, tag: String) {
-        if (layout == null) return
-        val fragments = fragmentManager?.fragments
-        val transaction = fragmentManager
-            ?.beginTransaction()
-            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+    companion object {
+        fun load(fragmentManager: FragmentManager, fragment: Fragment, tag: String) {
+            val fragments = fragmentManager.fragments
+            val transaction = fragmentManager
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 
-        Timber.d("Stack: ${fragmentManager?.backStackEntryCount}")
-        Timber.d("Fragments:  ${fragments?.size}")
+            Timber.d("Stack: ${fragmentManager.backStackEntryCount}")
+            Timber.d("Fragments:  ${fragments.size}")
 
-        fragments?.filter { !it.isHidden }
-            ?.forEach {
-                transaction?.hide(it)
-                Timber.d("Hiding: ${it.tag}")
+            fragments.filter { !it.isHidden }
+                .forEach {
+                    transaction.hide(it)
+                    Timber.d("Hiding: ${it.tag}")
+                }
+
+            if (fragmentManager.findFragmentByTag(tag) == null) {
+                transaction.add(R.id.frame_container, fragment, tag)
+                transaction.addToBackStack(tag)
+                Timber.d("Adding: ${fragment.tag}")
+            } else {
+                val actual = fragmentManager.findFragmentByTag(tag)!!
+                if (actual.isHidden) {
+                    transaction.show(actual)
+                    Timber.d("Showing: ${actual.tag}")
+                }
             }
-
-        if (fragmentManager?.findFragmentByTag(tag) == null) {
-            transaction?.add(layout!!, fragment, tag)
-            transaction?.addToBackStack(tag)
-            Timber.d("Adding: ${fragment.tag}")
-        } else {
-            val actual = fragmentManager?.findFragmentByTag(tag)!!
-            if (actual.isHidden) {
-                transaction?.show(actual)
-                Timber.d("Showing: ${actual.tag}")
-            }
+            transaction.commit()
         }
-        transaction?.commit()
     }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

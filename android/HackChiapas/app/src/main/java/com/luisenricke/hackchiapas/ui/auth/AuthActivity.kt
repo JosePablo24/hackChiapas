@@ -24,10 +24,12 @@ class AuthActivity : BaseActivity(), FragmentInteractionListener {
 
     override fun changeFragment(fragment: String) {
         when (fragment) {
-            LOGIN_FRAGMENT -> (Fragment() as BaseFragment)
-                .load(LogInFragment.newInstance(), LOGIN_FRAGMENT)
-            SIGNUP_FRAGMENT -> (Fragment() as BaseFragment)
-                .load(LogInFragment.newInstance(), SIGNUP_FRAGMENT)
+            LOGIN_FRAGMENT -> BaseFragment.load(
+                this.supportFragmentManager, LogInFragment.newInstance(), LOGIN_FRAGMENT
+            )
+            SIGNUP_FRAGMENT -> BaseFragment.load(
+                this.supportFragmentManager, SignUpFragment.newInstance(), SIGNUP_FRAGMENT
+            )
         }
     }
 
