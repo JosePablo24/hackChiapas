@@ -12,9 +12,11 @@ import android.os.CountDownTimer
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.telephony.SmsManager
+import android.widget.RemoteViews
 import android.widget.Toast
 import com.luisenricke.hackchiapas.Constants.CLICK_ACTIVE_WIDGET
 import com.luisenricke.hackchiapas.Constants.CLICK_DOBLE_VALIDATION
+import com.luisenricke.hackchiapas.R
 import com.luisenricke.hackchiapas.common.extension.format
 import com.luisenricke.hackchiapas.ui.main.MainActivity
 import com.luisenricke.hackchiapas.utils.LocationTrack
@@ -74,13 +76,32 @@ class ClickIntentService : IntentService("ClickIntentService") {
                     } else { //deprecated in API 26
                         v.vibrate(5000)
                     }
-                    Toast.makeText(applicationContext, "Se termino el tiempo", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(applicationContext, "Se termino el tiempo", Toast.LENGTH_SHORT).show()
                 } else {
                     locationTrack.showSettingsAlert()
                 }
 
             } else {
+                /*
+                val remoteViews = RemoteViews(applicationContext.packageName, R.layout.alarm_widget)
+                if (PreferenceHelper.get(
+                        applicationContext,
+                        CLICK_ACTIVE_WIDGET,
+                        Boolean::class
+                    ) == false
+                ) {
+                    remoteViews.setInt(
+                        R.id.appwidget_text,
+                        "setBackgroundResource",
+                        android.R.color.holo_red_light
+                    )
+                } else {
+                    remoteViews.setInt(
+                        R.id.appwidget_text,
+                        "setBackgroundResource",
+                        R.color.colorPrimary
+                    )
+                }*/
                 Toast.makeText(applicationContext, "Se paro el tiempo", Toast.LENGTH_SHORT).show()
             }
             Timber.i("End time")
@@ -112,15 +133,18 @@ class ClickIntentService : IntentService("ClickIntentService") {
 
     private fun handleClick() {
         var click = PreferenceHelper.get(this, CLICK_ACTIVE_WIDGET, Boolean::class)
-        var doubleClick: Boolean? = null
         Timber.i("Widget active: $click")
+        //val remoteViews = RemoteViews(applicationContext.packageName, R.layout.alarm_widget)
+
 
         if (click == false) { // Encender el widget
             Timber.i("Start time")
+            //remoteViews.setInt(R.id.appwidget_text, "setBackgroundResource", android.R.color.holo_red_light)
             mCountDownTimer.start()
             PreferenceHelper.set(this, CLICK_ACTIVE_WIDGET, true)
             PreferenceHelper.set(this, CLICK_DOBLE_VALIDATION, true)
         } else {
+            //remoteViews.setInt(R.id.appwidget_text, "setBackgroundResource", R.color.colorPrimary)
             mCountDownTimer.cancel()
             PreferenceHelper.set(this, CLICK_ACTIVE_WIDGET, false)
             PreferenceHelper.delete(this, CLICK_DOBLE_VALIDATION)

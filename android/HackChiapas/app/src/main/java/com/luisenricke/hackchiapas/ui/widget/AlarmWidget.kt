@@ -3,19 +3,13 @@ package com.luisenricke.hackchiapas.ui.widget
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.widget.RemoteViews
 import com.luisenricke.hackchiapas.Constants.CLICK_ACTIVE_WIDGET
-import com.luisenricke.hackchiapas.Constants.CLICK_WIDGET
 import com.luisenricke.hackchiapas.R
 import com.luisenricke.hackchiapas.utils.PreferenceHelper
-import timber.log.Timber
-import java.text.SimpleDateFormat
-
 
 /**
  * Implementation of App Widget functionality.
@@ -67,17 +61,19 @@ class AlarmWidget : AppWidgetProvider() {
                 PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
             val remoteViews = RemoteViews(context.packageName, R.layout.alarm_widget)
-
             remoteViews.setOnClickPendingIntent(R.id.appwidget_text, pendingIntent)
 
             val click: Boolean? = PreferenceHelper.get(context, CLICK_ACTIVE_WIDGET, Boolean::class)
             remoteViews.setTextViewText(R.id.appwidget_text, "Help")
-/*
+
+            /*
             if (click == true) {
                 PreferenceHelper.set(applicationContext, CLICK_ACTIVE_WIDGET, false)
             } else {
                 remoteViews.setTextViewText(R.id.appwidget_text, "Apagado")
-            }*/
+            }
+            */
+
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
         }
     }
